@@ -42,7 +42,7 @@ func initDefaultEnv() error {
 		}
 	}
 	if len(os.Getenv("PGPORT")) == 0 {
-		if err := os.Setenv("PGPORT", "5432"); err != nil {
+		if err := os.Setenv("PGPORT", "5838"); err != nil {
 			return errors.WithStack(err)
 		}
 	}
@@ -116,18 +116,18 @@ func New(settings Settings) (*Store, error) {
 
 	config, err := pgxpool.ParseConfig(settings.toDSN())
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, err
 	}
 
 	conn, err := pgxpool.ConnectConfig(context.Background(), config)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, err
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 	if err = conn.Ping(ctx); err != nil {
-		return nil, errors.WithStack(err)
+		return nil, err
 	}
 
 	return &Store{Pool: conn}, nil
