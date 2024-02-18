@@ -3,6 +3,7 @@ module architecture_go
 go 1.18
 
 require (
+	github.com/google/uuid v1.1.2
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/lib/pq v1.10.2
 	github.com/pkg/errors v0.9.1
